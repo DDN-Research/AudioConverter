@@ -1,0 +1,343 @@
+﻿АУДІОКОНВЕРТЕР ДЛЯ АВТОМАГНІТОЛИ 2.3 — ПАКЕТ З EXE
+Інструкція з запуску, вимоги, проблеми та їх розв'язання
+(English version below)
+======================================================================
+
+1. ЩО В ПАКЕТІ
+
+   AudioConverter\
+     AudioConverter.exe            запуск програми
+     _internal\                    Python 3.12 і Tcl/Tk (не змінювати, не видаляти)
+     ffmpeg\bin\                   FFmpeg 8.1: ffmpeg.exe, ffprobe.exe, ffplay.exe і DLL
+     docs\index.html               повна документація з ілюстраціями (UA/EN)
+     README.md                     та сама документація у форматі GitHub
+     THIRD-PARTY-LICENSES.txt      ліцензії сторонніх компонентів
+     ІНСТРУКЦІЯ_EXE_INSTRUCTIONS.txt   цей файл
+
+   Пакет портативний: нічого не встановлює, не потребує прав адміністратора й інтернету,
+   не пише в реєстр. Python і FFmpeg окремо встановлювати НЕ потрібно.
+
+
+2. ВИМОГИ
+
+   • Windows 10 або Windows 11, 64-розрядна (x64).
+     Windows 7, 8 і 32-розрядні системи не підтримуються.
+   • Близько 250 МБ вільного місця для програми + місце для нових музичних файлів.
+   • Звукова карта / навушники — лише для вбудованого програвача.
+   • Екран від 1366×768 (мінімальний розмір вікна 1060×820; на маленькому екрані
+     розгорніть вікно на весь екран).
+
+
+3. ЯК ЗАПУСТИТИ
+
+   1) Завантажте AudioConverter_2.3_Windows_x64.zip зі сторінки Releases на GitHub.
+   2) Правою кнопкою на архіві → «Властивості». Якщо внизу є «Розблокувати» —
+      поставте галочку → «OK». (Без цього Windows може блокувати DLL з архіву.)
+   3) Правою кнопкою → «Видобути все…» → виберіть звичайну папку, наприклад
+      C:\Programs\AudioConverter або Документи\AudioConverter.
+      НЕ запускайте EXE просто з вікна архіву — програма не знайде свої файли.
+      Краще не розпаковувати в C:\Program Files (там потрібні права адміністратора).
+   4) Відкрийте папку AudioConverter і двічі клацніть AudioConverter.exe.
+   5) Зручно створити ярлик: правою кнопкою на AudioConverter.exe →
+      «Показати додаткові параметри» (Windows 11) → «Надіслати» → «Робочий стіл
+      (створити ярлик)». Музичні файли можна перетягувати прямо на ярлик.
+
+   Перший запуск може тривати 5–15 секунд (Windows і антивірус перевіряють файли).
+   Далі програма відкривається за 1–3 секунди.
+
+   Важливо: AudioConverter.exe має лежати разом із папками _internal і ffmpeg.
+   Якщо потрібен EXE «деінде» — створіть ярлик, а не переносьте сам файл.
+
+
+4. ПЕРШИЙ ЗАПУСК: ПОПЕРЕДЖЕННЯ WINDOWS
+
+   4.1. «Windows захистив ваш комп'ютер» (синє вікно Microsoft Defender SmartScreen)
+        Натисніть «Докладніше» → «Виконати однаково».
+        Причина: програма не має платного сертифіката цифрового підпису, тому
+        SmartScreen її «не знає». Це звичайно для невеликих безкоштовних програм.
+
+   4.2. Антивірус блокує або видаляє AudioConverter.exe («Trojan…», «Wacatac»,
+        «Suspicious», «ML…» тощо)
+        Це хибне спрацювання: програми, зібрані PyInstaller, антивіруси часто
+        помилково вважають підозрілими. Що робити:
+        • Windows Defender: «Безпека Windows» → «Захист від вірусів і загроз» →
+          «Керування параметрами» → «Винятки» → «Додати виняток» → «Папка» →
+          виберіть папку AudioConverter. Якщо файл уже в карантині — «Журнал захисту»
+          → вибрати запис → «Дії» → «Відновити».
+        • Інший антивірус — додайте папку програми до винятків/довірених.
+        • Перевірити файл можна на virustotal.com (кілька «підозр» з 70 — типово
+          для PyInstaller) і звірити контрольну суму (розділ 7).
+        • Альтернатива без EXE: запуск із вихідного коду (Python + Start.bat),
+          див. README.md, «Варіант Б».
+
+   4.3. «Smart App Control заблокував…» (Windows 11)
+        Smart App Control блокує всі непідписані програми, обійти його для одного
+        файлу не можна. Варіанти: запуск із вихідного коду (Python підписаний
+        і запускається) або вимкнення Smart App Control
+        («Безпека Windows» → «Керування програмами та браузером»). Вимикати його
+        чи ні — вирішуєте ви; повторно ввімкнути без переустановлення Windows не можна.
+
+   4.4. «Ця програма заблокована адміністратором» / «Програма заблокована
+        груповою політикою» — на робочих і шкільних комп'ютерах запуск сторонніх
+        програм може бути заборонено. Зверніться до адміністратора.
+
+
+5. МОЖЛИВІ ПРОБЛЕМИ ТА РІШЕННЯ
+
+   Проблема: двічі клацаю — нічого не відбувається.
+     • Зачекайте 15–20 с (перший запуск, перевірка антивірусом).
+     • Перевірте, що архів розпаковано повністю і поруч з EXE є папка _internal.
+     • Перевірте карантин антивірусу (розділ 4.2).
+     • Розпакуйте заново в іншу папку з коротким шляхом, наприклад C:\AudioConverter.
+
+   Проблема: помилка «Failed to load Python DLL», «VCRUNTIME140.dll не знайдено»,
+             «The code execution cannot proceed…».
+     • Розпакуйте архів заново (файл міг бути пошкоджений або заблокований, див. 3.2).
+     • Встановіть Microsoft Visual C++ Redistributable 2015–2022 (x64):
+       https://aka.ms/vs/17/release/vc_redist.x64.exe
+
+   Проблема: унизу вікна червоним «FFmpeg: НЕ ЗНАЙДЕНО».
+     • Має існувати ...\AudioConverter\ffmpeg\bin\ffmpeg.exe і ffprobe.exe.
+       Якщо антивірус їх видалив — відновіть із карантину або розпакуйте пакет заново.
+     • Або натисніть «Вказати FFmpeg…» і виберіть папку, де лежать ffmpeg.exe і ffprobe.exe.
+
+   Проблема: програвач не грає / немає звуку.
+     • Має бути ffmpeg\bin\ffplay.exe.
+     • Перевірте гучність у програмі (не 0 %, кнопка ♪ не вимкнена) і в Windows.
+     • Перевірте пристрій виведення: значок динаміка на панелі завдань → виберіть
+       потрібні колонки/навушники. Після підключення навушників або Bluetooth
+       натисніть у програвачі ■, потім ▶.
+     • Якщо інша програма захопила звук в «монопольному режимі» — закрийте її.
+     • Після перемотування чи зміни гучності/еквалайзера звук на мить
+       переривається — це нормально.
+
+   Проблема: колесо миші не змінює гучність або еквалайзер.
+     • Наведіть курсор саме на повзунок (або на значення % / дБ поруч) і крутіть.
+
+   Проблема: «Помилка перекодування» / «Не вдалося створити папку».
+     • Перевірте вільне місце на диску.
+     • Виберіть папку збереження, куди є право запису (не C:\Program Files,
+       не CD/DVD, не захищена мережева папка).
+     • Якщо файли в OneDrive з позначкою «хмарка» (лише в Інтернеті) — клацніть
+       правою кнопкою → «Завжди зберігати на цьому пристрої».
+     • Дуже довгі шляхи (понад 260 символів) — перенесіть файли ближче до кореня диска.
+     • Спробуйте інший формат або бітрейт. Текст помилки FFmpeg показується у вікні.
+
+   Проблема: файл «✖ не вдалося прочитати».
+     • Файл пошкоджений або це не аудіо (наприклад, недокачаний). Перевірте його
+       в іншому програвачі.
+
+   Проблема: вікно не вміщується, дрібний або розмитий текст.
+     • Розгорніть вікно на весь екран.
+     • Параметри Windows → «Система» → «Дисплей» → «Масштаб»: спробуйте 100–125 %.
+
+   Проблема: на магнітолі «кракозябри» замість назв.
+     • Залиште увімкненими «Лише ID3v2.3» і «ID3v1 — кирилиця у Windows-1251».
+
+   Проблема: магнітола не бачить або не грає файли.
+     • Профіль «Автомагнітола» (MP3, 44 100 Гц, CBR, ID3v2.3), без обкладинки.
+     • Флешка у FAT32, до ~999 файлів у папці, короткі імена.
+     • Довгі збірки розбийте на частини по 20–30 хв.
+     • Кнопка «Взяти параметри з файлу, що грає…».
+
+   Проблема: програма «зависла» під час перекодування дуже довгого файлу.
+     • Подивіться на індикатори прогресу — великі файли (1–2 години) обробляються
+       1–3 хвилини. «Зупинити» безпечно перериває роботу.
+
+
+6. НАЛАШТУВАННЯ, ОНОВЛЕННЯ, ВИДАЛЕННЯ
+
+   • Налаштування: %APPDATA%\AudioConverterCar\settings.json
+     (вставте цей шлях в адресний рядок Провідника). Щоб скинути всі налаштування —
+     видаліть цей файл при закритій програмі.
+   • Оновлення: закрийте програму, розпакуйте нову версію замість старої папки.
+   • Видалення: видаліть папку AudioConverter і (за бажанням) %APPDATA%\AudioConverterCar.
+
+
+7. ПЕРЕВІРКА ЦІЛІСНОСТІ (необов'язково)
+
+   Контрольна сума SHA-256 файлу AudioConverter.exe наведена в описі релізу на GitHub.
+   Перевірити: відкрийте PowerShell у папці програми й виконайте
+     Get-FileHash .\AudioConverter.exe -Algorithm SHA256
+   Значення має збігтися (великі/малі літери не важливі).
+
+
+8. ЯКЩО НІЩО НЕ ДОПОМОГЛО
+
+   Створіть звернення на сторінці Issues репозиторію на GitHub і додайте:
+   • версію Windows (Win+R → winver);
+   • знімок екрана повідомлення про помилку (Win+Shift+S);
+   • текст помилки FFmpeg (у вікні помилки натисніть Ctrl+C — текст скопіюється);
+   • опис дій: який файл, які параметри, що натискали;
+   • за потреби — файл %APPDATA%\AudioConverterCar\settings.json.
+
+   Повна документація: docs\index.html (відкривається в будь-якому браузері).
+
+
+======================================================================
+CAR AUDIO CONVERTER 2.3 — EXE PACKAGE
+How to run, requirements, troubleshooting
+======================================================================
+
+1. WHAT'S INSIDE
+
+   AudioConverter\
+     AudioConverter.exe            starts the program
+     _internal\                    Python 3.12 and Tcl/Tk (do not modify or delete)
+     ffmpeg\bin\                   FFmpeg 8.1: ffmpeg.exe, ffprobe.exe, ffplay.exe and DLLs
+     docs\index.html               full illustrated documentation (UA/EN)
+     README.md                     the same documentation in GitHub format
+     THIRD-PARTY-LICENSES.txt      third-party licenses
+     ІНСТРУКЦІЯ_EXE_INSTRUCTIONS.txt   this file
+
+   The package is portable: it installs nothing, needs no administrator rights or
+   internet, and does not write to the registry. You do NOT need to install Python or FFmpeg.
+
+
+2. REQUIREMENTS
+
+   • Windows 10 or Windows 11, 64-bit (x64). Windows 7, 8 and 32-bit are not supported.
+   • About 250 MB of free space for the program, plus space for converted music.
+   • A sound device — only for the built-in player.
+   • Screen 1366×768 or larger (minimum window size 1060×820; maximize it on small screens).
+   • The interface is in Ukrainian; the documentation explains every control in English.
+
+
+3. HOW TO RUN
+
+   1) Download AudioConverter_2.3_Windows_x64.zip from the Releases page on GitHub.
+   2) Right-click the zip → Properties. If there is an "Unblock" checkbox at the bottom,
+      tick it → OK. (Otherwise Windows may block DLLs extracted from the archive.)
+   3) Right-click → "Extract All…" → choose a normal folder, e.g. C:\Programs\AudioConverter.
+      Do NOT run the EXE directly from the zip window — it won't find its files.
+      Avoid C:\Program Files (requires administrator rights).
+   4) Open the AudioConverter folder and double-click AudioConverter.exe.
+   5) To create a shortcut: right-click AudioConverter.exe → "Show more options"
+      (Windows 11) → "Send to" → "Desktop (create shortcut)". You can drag music
+      files onto the shortcut.
+
+   The first start may take 5–15 seconds (Windows and the antivirus scan the files);
+   later starts take 1–3 seconds.
+
+   Important: AudioConverter.exe must stay together with the _internal and ffmpeg folders.
+   If you want it elsewhere, create a shortcut instead of moving the file.
+
+
+4. FIRST START: WINDOWS WARNINGS
+
+   4.1. "Windows protected your PC" (blue Microsoft Defender SmartScreen window)
+        Click "More info" → "Run anyway". The program has no paid code-signing
+        certificate, so SmartScreen doesn't recognize it. This is common for small
+        free programs.
+
+   4.2. Antivirus blocks or deletes AudioConverter.exe ("Trojan…", "Wacatac",
+        "Suspicious", "ML…", etc.)
+        This is a false positive: programs built with PyInstaller are often flagged.
+        • Windows Defender: Windows Security → Virus & threat protection → Manage
+          settings → Exclusions → Add an exclusion → Folder → choose the AudioConverter
+          folder. If the file is already quarantined: Protection history → select the
+          entry → Actions → Restore.
+        • Other antivirus: add the program folder to exclusions/trusted.
+        • You can check the file on virustotal.com (a few detections out of ~70 are
+          typical for PyInstaller) and verify the checksum (section 7).
+        • Alternative without the EXE: run from source (Python + Start.bat),
+          see README.md, "Option B".
+
+   4.3. "Smart App Control blocked…" (Windows 11)
+        Smart App Control blocks all unsigned programs and cannot be bypassed for a
+        single file. Options: run from source (Python is signed and allowed), or turn
+        Smart App Control off (Windows Security → App & browser control). That is your
+        decision; it cannot be turned back on without reinstalling Windows.
+
+   4.4. "This app has been blocked by your system administrator" / Group Policy — on
+        work or school computers third-party programs may be forbidden. Contact the
+        administrator.
+
+
+5. TROUBLESHOOTING
+
+   Problem: I double-click and nothing happens.
+     • Wait 15–20 s (first start, antivirus scan).
+     • Make sure the archive was fully extracted and the _internal folder is next to the EXE.
+     • Check the antivirus quarantine (section 4.2).
+     • Extract again into a folder with a short path, e.g. C:\AudioConverter.
+
+   Problem: "Failed to load Python DLL", "VCRUNTIME140.dll was not found",
+            "The code execution cannot proceed…".
+     • Extract the archive again (it may have been damaged or blocked, see 3.2).
+     • Install Microsoft Visual C++ Redistributable 2015–2022 (x64):
+       https://aka.ms/vs/17/release/vc_redist.x64.exe
+
+   Problem: red "FFmpeg: НЕ ЗНАЙДЕНО" (FFmpeg: NOT FOUND) at the bottom.
+     • ...\AudioConverter\ffmpeg\bin\ffmpeg.exe and ffprobe.exe must exist. If the
+       antivirus removed them, restore them from quarantine or extract the package again.
+     • Or click "Вказати FFmpeg…" (Locate FFmpeg…) and select the folder with them.
+
+   Problem: the player is silent.
+     • ffmpeg\bin\ffplay.exe must exist.
+     • Check the volume in the program (not 0%, ♪ not muted) and in Windows.
+     • Check the output device: speaker icon in the taskbar → choose your
+       speakers/headphones. After connecting headphones or Bluetooth, press ■ then ▶.
+     • If another program holds the sound device in exclusive mode, close it.
+     • After seeking or changing volume/EQ the sound pauses briefly — this is normal.
+
+   Problem: the mouse wheel doesn't change volume or EQ.
+     • Hover over the slider itself (or the % / dB value next to it) and scroll.
+
+   Problem: "Помилка перекодування" (conversion error) / "Не вдалося створити папку"
+            (could not create folder).
+     • Check free disk space.
+     • Choose an output folder you can write to (not C:\Program Files, not a CD/DVD,
+       not a protected network share).
+     • OneDrive files marked with a cloud icon (online-only): right-click → "Always keep
+       on this device".
+     • Very long paths (over 260 characters): move files closer to the drive root.
+     • Try another format or bitrate. The FFmpeg error text is shown in the window.
+
+   Problem: file shows "✖ не вдалося прочитати" (could not read).
+     • The file is damaged or not audio (e.g. an incomplete download). Try another player.
+
+   Problem: the window doesn't fit, text is tiny or blurry.
+     • Maximize the window.
+     • Windows Settings → System → Display → Scale: try 100–125%.
+
+   Problem: garbled titles on the car stereo.
+     • Keep "Лише ID3v2.3" (ID3v2.3 only) and "ID3v1 — кирилиця у Windows-1251" enabled.
+
+   Problem: the car stereo doesn't see or play the files.
+     • "Car stereo" profile (MP3, 44,100 Hz, CBR, ID3v2.3), no cover art.
+     • FAT32 USB stick, up to ~999 files per folder, short names.
+     • Split long compilations into 20–30 minute parts.
+     • Use "Взяти параметри з файлу, що грає…" (Copy settings from a file that plays…).
+
+   Problem: the program seems frozen while converting a very long file.
+     • Watch the progress bars — 1–2 hour files take 1–3 minutes. "Зупинити" (Stop)
+       safely aborts.
+
+
+6. SETTINGS, UPDATING, UNINSTALLING
+
+   • Settings: %APPDATA%\AudioConverterCar\settings.json (paste this path into the
+     Explorer address bar). To reset everything, delete this file while the program is closed.
+   • Update: close the program, extract the new version over the old folder.
+   • Uninstall: delete the AudioConverter folder and, optionally, %APPDATA%\AudioConverterCar.
+
+
+7. INTEGRITY CHECK (optional)
+
+   The SHA-256 checksum of AudioConverter.exe is given in the release notes on GitHub.
+   To verify, open PowerShell in the program folder and run
+     Get-FileHash .\AudioConverter.exe -Algorithm SHA256
+   The value must match (letter case does not matter).
+
+
+8. IF NOTHING HELPS
+
+   Open an issue on the repository's Issues page on GitHub and include:
+   • Windows version (Win+R → winver);
+   • a screenshot of the error message (Win+Shift+S);
+   • the FFmpeg error text (press Ctrl+C in the error window to copy it);
+   • what you did: which file, which settings, which buttons;
+   • if needed, %APPDATA%\AudioConverterCar\settings.json.
+
+   Full documentation: docs\index.html (opens in any web browser).

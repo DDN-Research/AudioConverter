@@ -1,0 +1,825 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Аудіоконвертер для автомагнітоли — документація</title>
+<meta name="description" content="Аудіоконвертер для автомагнітоли: встановлення, інструкція, програвач, еквалайзер, теги, обкладинки, розбиття довгих файлів. Car Audio Converter documentation.">
+<link rel="icon" href="img/icon.png">
+<style>
+:root{--bg:#fbfaf7;--fg:#1d2433;--muted:#5d6678;--line:#e3e1da;--card:#ffffff;--accent:#1b2a6b;--accent2:#ff6b35;--code:#f1efe8;--note:#fff4e0}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#12151d;--fg:#e6e8ee;--muted:#9aa3b5;--line:#2a3040;--card:#1a1f2b;--accent:#9db1ff;--accent2:#ff8a5c;--code:#222838;--note:#2b2418}}
+:root[data-theme="dark"]{--bg:#12151d;--fg:#e6e8ee;--muted:#9aa3b5;--line:#2a3040;--card:#1a1f2b;--accent:#9db1ff;--accent2:#ff8a5c;--code:#222838;--note:#2b2418}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.65 "Segoe UI",system-ui,-apple-system,Roboto,"Noto Sans",Arial,sans-serif}
+header{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar{max-width:1180px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:12px}
+.bar img{width:36px;height:36px}
+.bar .t{font-weight:700;line-height:1.2}
+.bar .t small{display:block;font-weight:400;color:var(--muted);font-size:13px}
+.sp{flex:1}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.lang button{border:0;background:transparent;color:var(--fg);padding:6px 14px;font:inherit;font-size:14px;cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--accent);color:var(--bg)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px;display:grid;grid-template-columns:240px minmax(0,1fr);gap:40px}
+nav.toc{position:sticky;top:76px;align-self:start;max-height:calc(100vh - 90px);overflow:auto;padding:24px 0;font-size:14px}
+nav.toc a{display:block;color:var(--muted);text-decoration:none;padding:5px 10px;border-left:2px solid var(--line)}
+nav.toc a:hover,nav.toc a.on{color:var(--accent);border-left-color:var(--accent2)}
+main{padding:24px 0 80px;min-width:0}
+.hero{padding:28px 0 8px}
+.hero h1{font-size:clamp(28px,4vw,40px);line-height:1.15;margin:0 0 8px;color:var(--accent)}
+.hero p{color:var(--muted);margin:0 0 8px;max-width:62ch}
+.dl{display:inline-flex;gap:10px;flex-wrap:wrap;margin:10px 0 0}
+.dl a{display:inline-block;padding:9px 16px;border-radius:10px;text-decoration:none;font-weight:600;background:var(--accent2);color:#fff}
+.dl a.alt{background:transparent;color:var(--accent);border:1px solid var(--line)}
+h2{font-size:24px;margin:48px 0 12px;padding-top:8px;border-top:1px solid var(--line);color:var(--accent)}
+h3{font-size:18px;margin:28px 0 8px}
+p,li{max-width:75ch}
+a{color:var(--accent)}
+code{background:var(--code);padding:1px 6px;border-radius:5px;font-size:.92em;overflow-wrap:anywhere}
+p,li,td,th,blockquote{overflow-wrap:anywhere}
+pre{background:var(--code);padding:14px 16px;border-radius:10px;overflow:auto;font-size:14px;line-height:1.5}
+pre code{background:none;padding:0}
+blockquote{margin:16px 0;padding:10px 16px;background:var(--note);border-left:4px solid var(--accent2);border-radius:0 10px 10px 0}
+blockquote p{margin:4px 0}
+.tbl{overflow-x:auto;margin:14px 0;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--line)}
+th{background:var(--code);font-weight:600}
+tr:last-child td{border-bottom:0}
+figure{margin:18px 0}
+figure img,main a.zoom img{max-width:100%;height:auto;border:1px solid var(--line);border-radius:10px;box-shadow:0 6px 24px rgba(20,30,60,.12);display:block;background:#fff}
+figcaption{color:var(--muted);font-size:14px;margin-top:6px}
+li a.zoom img{max-width:min(100%,560px);margin:10px 0}
+.lb{position:fixed;inset:0;background:rgba(8,10,16,.88);display:none;align-items:center;justify-content:center;z-index:20;cursor:zoom-out;padding:16px}
+.lb img{max-width:100%;max-height:100%;border-radius:8px}
+.lb.on{display:flex}
+footer{color:var(--muted);font-size:14px;border-top:1px solid var(--line);padding:20px 0;margin-top:40px}
+[hidden]{display:none!important}
+@media (max-width:900px){.wrap{grid-template-columns:1fr}nav.toc{display:none}}
+@media (max-width:520px){.bar{gap:8px;padding:8px 12px}.bar img{width:28px;height:28px}.bar .t{font-size:14px;min-width:0;flex:1}.bar .t span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sp{display:none}.lang{flex:none}.lang button{padding:5px 10px}}
+@media print{header,nav.toc{display:none}.wrap{display:block}section[hidden]{display:block!important}}
+</style>
+</head>
+<body>
+<header><div class="bar">
+<img src="img/icon.png" alt="">
+<div class="t"><span data-ua>Аудіоконвертер для автомагнітоли</span><span data-en hidden>Car Audio Converter</span><small>2.3 · Windows 10/11</small></div>
+<div class="sp"></div>
+<div class="lang" role="group" aria-label="Мова / Language">
+<button type="button" data-set="ua" aria-pressed="true">UA</button><button type="button" data-set="en" aria-pressed="false">EN</button>
+</div>
+</div></header>
+<div class="wrap">
+<nav class="toc"><div data-ua><a href="#ua-features">1. Що вміє програма</a>
+<a href="#ua-install">2. Завантаження та встановлення</a>
+<a href="#ua-quick">3. Швидкий старт (5 кроків)</a>
+<a href="#ua-window">4. Вікно програми</a>
+<a href="#ua-player">5. Програвач</a>
+<a href="#ua-params">6. Вкладка «Параметри»: перевірка сумісності</a>
+<a href="#ua-tags">7. Вкладка «Теги й обкладинка»</a>
+<a href="#ua-split">8. Вкладка «Розбиття на ділянки»</a>
+<a href="#ua-output">9. Параметри вихідного файлу</a>
+<a href="#ua-convert">10. Перекодування й результат</a>
+<a href="#ua-tips">11. Поради для автомагнітоли</a>
+<a href="#ua-faq">12. Типові проблеми та рішення</a>
+<a href="#ua-dev">13. Для розробників: структура й збирання EXE</a>
+<a href="#ua-settings">14. Налаштування, оновлення, видалення</a>
+<a href="#ua-license">15. Ліцензія</a></div><div data-en hidden><a href="#en-features">1. Features</a>
+<a href="#en-install">2. Download and installation</a>
+<a href="#en-quick">3. Quick start (5 steps)</a>
+<a href="#en-window">4. Main window</a>
+<a href="#en-player">5. Player</a>
+<a href="#en-params">6. “Параметри” (Details) tab: compatibility check</a>
+<a href="#en-tags">7. “Теги й обкладинка” (Tags &amp; cover) tab</a>
+<a href="#en-split">8. “Розбиття на ділянки” (Splitting) tab</a>
+<a href="#en-output">9. Output settings</a>
+<a href="#en-convert">10. Converting and results</a>
+<a href="#en-tips">11. Car stereo tips</a>
+<a href="#en-faq">12. Troubleshooting</a>
+<a href="#en-dev">13. For developers: layout and building the EXE</a>
+<a href="#en-settings">14. Settings, updating, uninstalling</a>
+<a href="#en-license">15. License</a></div></nav>
+<main>
+<section data-ua lang="uk">
+<div class="hero"><h1>Аудіоконвертер для автомагнітоли</h1>
+<p>Аналіз і перекодування музики для автомагнітол: MP3 44 100 Гц CBR, теги ID3v2.3, кирилиця без «кракозябр», обкладинки, розбиття довгих збірок, програвач з еквалайзером.</p>
+<div class="dl"><a href="#ua-install" data-gh="releases/latest">Завантажити EXE (Windows x64)</a><a class="alt" href="#ua-install" data-gh="">Код на GitHub</a></div></div>
+<p><a id="ukrainian"></a></p>
+
+<p><a id="ua-features"></a></p>
+<h2>1. Що вміє програма</h2>
+<p>Багато автомагнітол «вибагливі»: не грають файли з частотою 48 000 Гц, змінним бітрейтом (VBR), великою обкладинкою чи тегами ID3v2.4, показують «кракозябри» замість кирилиці або не відкривають дуже довгі файли. Програма знаходить такі проблеми й перекодовує музику так, щоб вона гарантовано грала в машині.</p>
+<ul>
+<li><strong>Аналіз файлу</strong>: кодек, частота, бітрейт (CBR/VBR), канали, версія тегів, обкладинка і зрозуміла перевірка сумісності з автомагнітолою.</li>
+<li><strong>Перекодування</strong> в MP3, AAC (M4A), WMA, OGG, FLAC, WAV з потрібними параметрами. Профіль <strong>«Автомагнітола»</strong> одним натисканням: MP3, 44 100 Гц, CBR 256 кбіт/с, стерео, ID3v2.3.</li>
+<li><strong>«Взяти параметри з файлу, що грає»</strong>: виберіть пісню, яку магнітола точно відтворює, і програма скопіює її параметри.</li>
+<li><strong>Теги</strong>: назва, виконавець, альбом, рік, жанр, номер треку; заповнення з імені файлу, нумерація за списком.</li>
+<li><strong>Обкладинка</strong>: своє зображення, з файлу або без неї. Великі картинки автоматично зменшуються до 500×500 зі збереженням пропорцій.</li>
+<li><strong>ID3v2.3 замість ID3v2.4</strong> і <strong>ID3v1 у Windows-1251</strong>, щоб старі магнітоли показували українські назви.</li>
+<li><strong>Розбиття довгих файлів</strong>: автоматично (кожні N хвилин, N рівних частин), вручну або за <strong>треклістом</strong> («0:00 Виконавець - Пісня»).</li>
+<li><strong>Вбудований програвач</strong> із таймлайном, гучністю (до 200 %) та <strong>10-смуговим еквалайзером</strong>; позначки місць розрізу «на слух».</li>
+<li>Пакетна обробка: файли й цілі папки, два індикатори прогресу, оригінали не змінюються.</li>
+</ul>
+<p><a id="ua-install"></a></p>
+<h2>2. Завантаження та встановлення</h2>
+<h3>Варіант А (рекомендовано): готовий пакет з EXE</h3>
+<ol>
+<li>Відкрийте сторінку <a href="#ua-install" data-gh="releases/latest"><strong>Releases</strong></a> і завантажте <code>AudioConverter_2.3_Windows_x64.zip</code>.</li>
+<li>Клацніть архів правою кнопкою → <strong>Властивості</strong> → якщо внизу є пункт <strong>«Розблокувати»</strong>, поставте галочку → <strong>OK</strong>.</li>
+<li>Розпакуйте архів у звичайну папку, наприклад <code>C:\Programs\AudioConverter</code>. <strong>Не запускайте програму просто з архіву.</strong></li>
+<li>Запустіть <code>AudioConverter.exe</code>. Python і FFmpeg уже всередині пакета, нічого більше встановлювати не треба.</li>
+</ol>
+<blockquote>
+<p>Під час першого запуску Windows може показати синє вікно <strong>«Windows захистив ваш комп'ютер»</strong>. Натисніть <strong>«Докладніше»</strong> → <strong>«Виконати однаково»</strong>. Програма не має платного цифрового підпису, тому SmartScreen її «не знає». Детальніше — у розділі <a href="#ua-faq">Типові проблеми</a> та в <a href="EXE_INSTRUCTIONS.txt">інструкції до EXE</a>.</p>
+</blockquote>
+<h3>Варіант Б: запуск із вихідного коду (Python)</h3>
+<ol>
+<li>Встановіть <strong>Python 3.8 або новіший</strong> з <a href="https://www.python.org/downloads/">python.org</a>. Під час встановлення поставте галочку <strong>«Add python.exe to PATH»</strong>.</li>
+<li>Завантажте код: <strong>Code → Download ZIP</strong> на цій сторінці (або <code>git clone</code>) і розпакуйте.</li>
+<li>Встановіть <strong>FFmpeg</strong>: запустіть <code>Install-FFmpeg.bat</code> (через winget) або завантажте <code>ffmpeg-release-essentials.zip</code> з <a href="https://www.gyan.dev/ffmpeg/builds/">gyan.dev</a> і покладіть <code>ffmpeg.exe</code>, <code>ffprobe.exe</code>, <code>ffplay.exe</code> у папку <code>ffmpeg\bin</code> поруч із програмою.</li>
+<li>Запустіть <code>Start.bat</code> (або двічі клацніть <code>audio_converter.pyw</code>).</li>
+</ol>
+<p>Сторонні бібліотеки Python не потрібні: інтерфейс зроблено на вбудованому tkinter.</p>
+<p><a id="ua-quick"></a></p>
+<h2>3. Швидкий старт (5 кроків)</h2>
+<ol>
+<li><strong>«Додати файли…»</strong> або <strong>«Додати папку…»</strong> (можна також перетягнути файли на <code>AudioConverter.exe</code>).</li>
+<li>Подивіться колонку <strong>«Сумісність / стан»</strong>: ✔ сумісний, ⚠ можливі проблеми, ✖ найімовірніше не гратиме.</li>
+<li>Натисніть <strong>«★ Профіль «Автомагнітола»»</strong> праворуч.</li>
+<li>За потреби поправте теги, обкладинку або розбиття на вкладках ліворуч.</li>
+<li>Натисніть <strong>«▶ Перекодувати»</strong>. Готові файли з'являться поруч з оригіналами (з додатком <code>_car</code>) або у вибраній папці.</li>
+</ol>
+<p><a id="ua-window"></a></p>
+<h2>4. Вікно програми</h2>
+<figure><a class="zoom" href="img/01_main.png"><img src="img/01_main.png" alt="Головне вікно" loading="lazy"></a><figcaption>Головне вікно</figcaption></figure>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Зона</th>
+<th>Що там</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Вхідні файли</strong> (вгорі)</td>
+<td>Список файлів з кодеком, частотою, бітрейтом, тривалістю й оцінкою сумісності. Кнопки: додати файли/папку, видалити, очистити.</td>
+</tr>
+<tr>
+<td><strong>Програвач</strong></td>
+<td>Прослуховування, таймлайн, гучність, еквалайзер, позначки для розрізання.</td>
+</tr>
+<tr>
+<td><strong>Вибраний файл</strong> (ліворуч)</td>
+<td>Три вкладки: «Параметри», «Теги й обкладинка», «Розбиття на ділянки».</td>
+</tr>
+<tr>
+<td><strong>Параметри вихідного файлу</strong> (праворуч)</td>
+<td>Формат, бітрейт, частота, канали, теги, розбиття, обкладинка, профілі.</td>
+</tr>
+<tr>
+<td><strong>Внизу</strong></td>
+<td>Папка збереження, прогрес поточного файлу і всього списку, кнопки «Перекодувати», «Відкрити папку результату», «Зупинити», шлях до FFmpeg.</td>
+</tr>
+</tbody>
+</table></div>
+<p><a id="ua-player"></a></p>
+<h2>5. Програвач</h2>
+<figure><a class="zoom" href="img/05_player.png"><img src="img/05_player.png" alt="Програвач і розбиття" loading="lazy"></a><figcaption>Програвач і розбиття</figcaption></figure>
+<ul>
+<li><strong>Двічі клацніть</strong> файл у списку (або виберіть його й натисніть <strong>Enter</strong> чи <strong>▶</strong>), і він заграє.</li>
+<li>Кнопки: <strong>|◀</strong> попередній файл (або на початок поточного), <strong>▶ / ||</strong> відтворення / пауза, <strong>■</strong> стоп, <strong>▶|</strong> наступний.</li>
+<li><strong>Таймлайн</strong>: клацніть або перетягніть кружечок, щоб перемотати. <strong>Колесо миші</strong> над таймлайном перемотує на ±5 с. Помаранчеві риски — межі ділянок із вкладки «Розбиття».</li>
+<li><strong>Гучність</strong>: повзунок 0–200 % (колесо миші: ±5 %), кнопка <strong>♪</strong> вимикає й вмикає звук.</li>
+<li><strong>«Еквалайзер…»</strong> відкриває вікно з 10 смугами:</li>
+</ul>
+<figure><a class="zoom" href="img/06_eq.png"><img src="img/06_eq.png" alt="Еквалайзер" loading="lazy"></a><figcaption>Еквалайзер</figcaption></figure>
+<ul>
+<li>смуги 31 Гц … 16 кГц, від −12 до +12 дБ; <strong>колесо миші</strong> над повзунком: ±1 дБ; <strong>подвійне клацання</strong>: 0;</li>
+<li>готові профілі: Плоский, Більше басів, Менше басів, Рок, Поп, Танцювальна, Джаз, Класика, Голос / аудіокнига, Більше високих; якщо змінити смуги вручну, профіль називається «Власне»;</li>
+<li>галочка <strong>«Застосовувати еквалайзер і під час перекодування»</strong>: нові файли звучатимуть так само (праворуч з'явиться нагадування ⚠).</li>
+<li><strong>«Поточну позицію → Початок / Кінець ділянки»</strong> переносить час, який зараз грає, у поля вкладки «Розбиття». Зручно, щоб різати збірку «на слух».</li>
+<li><strong>«Далі по списку»</strong>: після кінця пісні грає наступна. <strong>«Відкрити інший файл…»</strong>: послухати будь-який файл, наприклад готовий результат.</li>
+</ul>
+<blockquote>
+<p>Звук відтворює <code>ffplay.exe</code> з комплекту FFmpeg. Після перемотування або зміни гучності чи еквалайзера звук на мить переривається. Це нормально.</p>
+</blockquote>
+<p><a id="ua-params"></a></p>
+<h2>6. Вкладка «Параметри»: перевірка сумісності</h2>
+<p>Показує всі технічні параметри вибраного файлу і перелік зауважень:</p>
+<ul>
+<li>✖ <strong>червоні</strong>: магнітола найімовірніше не відтворить файл (не той кодек, частота не 44 100 Гц, понад 2 канали тощо);</li>
+<li>⚠ <strong>жовті</strong>: можливі проблеми (VBR, дуже довгий або великий файл, AAC);</li>
+<li>ℹ <strong>сірі</strong>: інформація (ID3v2.4, обкладинка, відсутні теги, заплановане розбиття).</li>
+</ul>
+<p><a id="ua-tags"></a></p>
+<h2>7. Вкладка «Теги й обкладинка»</h2>
+<figure><a class="zoom" href="img/02_tags.png"><img src="img/02_tags.png" alt="Теги й обкладинка" loading="lazy"></a><figcaption>Теги й обкладинка</figcaption></figure>
+<ul>
+<li>Поля <strong>Назва, Виконавець, Альбом, Виконавець альбому, Рік, Жанр, № треку</strong> (наприклад, <code>3</code> або <code>3/12</code>). Порожнє поле означає, що тег не записується.</li>
+<li><strong>«Заповнити з імені файлу»</strong>: <code>Виконавець - Назва.mp3</code> → теги (номер на початку, як-от <code>01 -</code>, відкидається).</li>
+<li><strong>«Повернути теги файлу»</strong>: скасувати свої зміни.</li>
+<li><strong>«Альбом/рік/жанр/обкладинку → усім»</strong>: скопіювати ці поля в усі файли списку.</li>
+<li><strong>«Пронумерувати за списком»</strong>: № треку 1/N, 2/N… у порядку списку.</li>
+<li><strong>Обкладинка</strong>: «Як у загальних налаштуваннях», «Залишити обкладинку з файлу», «Своє зображення» (JPG, PNG, BMP, WebP), «Без обкладинки». <strong>«Знайти в папці»</strong> шукає <code>cover.jpg</code>, <code>folder.jpg</code>, <code>front.jpg</code> поруч із піснею.</li>
+<li>Своє зображення <strong>завжди</strong> зберігається як JPEG, а якщо воно більше за 500×500, зменшується пропорційно (1200×900 → 500×375, 800×1600 → 250×500). Під мініатюрою видно, яким буде розмір.</li>
+<li>Обкладинку зберігають лише формати MP3, M4A та FLAC.</li>
+</ul>
+<p>Оригінальні файли не змінюються: теги й обкладинка потрапляють лише в нові файли.</p>
+<p><a id="ua-split"></a></p>
+<h2>8. Вкладка «Розбиття на ділянки»</h2>
+<figure><a class="zoom" href="img/04_split.png"><img src="img/04_split.png" alt="Розбиття на ділянки" loading="lazy"></a><figcaption>Розбиття на ділянки</figcaption></figure>
+<p>Режими для вибраного файлу:</p>
+<ul>
+<li><strong>«Як у загальних налаштуваннях»</strong>: за полем «Розбити на частини по, хв» праворуч (0 означає не розбивати);</li>
+<li><strong>«Не розбивати цей файл»</strong>;</li>
+<li><strong>«Вручну»</strong>: за списком ділянок.</li>
+</ul>
+<p>Як задати ділянки:</p>
+<ul>
+<li><strong>Вручну</strong>: «Початок», «Кінець» і (необов'язково) «Назва» → <strong>«Додати»</strong>. Формат часу: <code>1:02:03</code>, <code>45:10</code> або <code>90</code> (секунди). Порожній «Кінець» означає до наступної ділянки або до кінця файлу. <strong>Проміжки між ділянками в результат не потрапляють</strong>, тож так можна вирізати зайве.</li>
+<li><strong>Автоматично</strong>: «Заповнити кожні N хв» або «на N рівних частин», потім за потреби підправити.</li>
+<li><strong>За треклістом</strong>: <strong>«Вставити трекліст…»</strong> і вставте список з часом (наприклад, з опису відео):</li>
+</ul>
+<figure><a class="zoom" href="img/03_tracklist.png"><img src="img/03_tracklist.png" alt="Трекліст" loading="lazy"></a><figcaption>Трекліст</figcaption></figure>
+<p>Підходять рядки на зразок <code>0:00 Назва</code>, <code>1. Виконавець - Пісня 3:45</code>, <code>[1:02:30] Назва</code>. Галочка <strong>«Назви виду «Виконавець - Пісня» → окремі теги»</strong> розділяє назву на теги «Виконавець» і «Назва».
+- <strong>Прослухати</strong>: «▶ від «Початку»» і «▶ перед «Кінцем»», щоб точно знайти місце розрізу.</p>
+<p>Частини отримують теги: назва (з назви ділянки або «… (частина N з M)»), № треку N/M, альбом (якщо порожній — назва вихідного файлу). Галочка <strong>«Частини файлу — в окрему папку»</strong> складає їх у папку з назвою файлу: <code>01 - Назва.mp3</code>, <code>02 - …</code>.</p>
+<p><a id="ua-output"></a></p>
+<h2>9. Параметри вихідного файлу</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Параметр</th>
+<th>Значення</th>
+<th>Порада</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Формат</td>
+<td>MP3, AAC (M4A), WMA, OGG Vorbis, FLAC, WAV</td>
+<td><strong>MP3</strong> — найсумісніший</td>
+</tr>
+<tr>
+<td>Тип бітрейту</td>
+<td>CBR (постійний) / VBR (змінний)</td>
+<td><strong>CBR</strong> для магнітол</td>
+</tr>
+<tr>
+<td>Бітрейт</td>
+<td>32–320 кбіт/с</td>
+<td>192–256 кбіт/с</td>
+</tr>
+<tr>
+<td>Якість VBR</td>
+<td>V0 (~245) … V9 (~65)</td>
+<td>лише для VBR</td>
+</tr>
+<tr>
+<td>Частота</td>
+<td>44 100, 48 000, 32 000… Гц</td>
+<td><strong>44 100 Гц</strong></td>
+</tr>
+<tr>
+<td>Канали</td>
+<td>Як у вихідному / Стерео / Моно</td>
+<td>Стерео</td>
+</tr>
+<tr>
+<td>Розрядність</td>
+<td>16 / 24 біт</td>
+<td>для FLAC і WAV</td>
+</tr>
+<tr>
+<td>Теги MP3</td>
+<td>ID3v2.3 + ID3v1 / ID3v2.3 / ID3v2.4</td>
+<td>ID3v2.3 + ID3v1</td>
+</tr>
+<tr>
+<td>Лише ID3v2.3</td>
+<td>галочка</td>
+<td>увімкнено</td>
+</tr>
+<tr>
+<td>ID3v1 у Windows-1251</td>
+<td>галочка</td>
+<td>увімкнено (кирилиця на старих магнітолах)</td>
+</tr>
+<tr>
+<td>Розбити на частини по, хв</td>
+<td>0–120</td>
+<td>20–30 хв для довгих збірок</td>
+</tr>
+<tr>
+<td>Зберегти теги</td>
+<td>галочка</td>
+<td>переносити теги з оригіналу</td>
+</tr>
+<tr>
+<td>Зберегти обкладинку альбому</td>
+<td>галочка</td>
+<td>вимкнено в профілі «Автомагнітола»</td>
+</tr>
+<tr>
+<td>Обкладинку з файлу — JPEG до 500×500</td>
+<td>галочка</td>
+<td>увімкнено</td>
+</tr>
+<tr>
+<td>Частини файлу — в окрему папку</td>
+<td>галочка</td>
+<td>для збірок</td>
+</tr>
+<tr>
+<td>Вирівняти гучність</td>
+<td>EBU R128, −14 LUFS</td>
+<td>для збірок з різною гучністю</td>
+</tr>
+</tbody>
+</table></div>
+<p>Кнопки: <strong>«★ Профіль «Автомагнітола»»</strong> і <strong>«Взяти параметри з файлу, що грає…»</strong>. Під кнопками показано орієнтовний розмір результату.</p>
+<p><a id="ua-convert"></a></p>
+<h2>10. Перекодування й результат</h2>
+<figure><a class="zoom" href="img/08_done.png"><img src="img/08_done.png" alt="Після перекодування" loading="lazy"></a><figcaption>Після перекодування</figcaption></figure>
+<ul>
+<li><strong>«Зберегти в папку»</strong>: якщо поле порожнє, файли з'являться поруч з оригіналами з додатком <code>_car</code>.</li>
+<li><strong>«▶ Перекодувати»</strong> обробляє <strong>всі</strong> файли списку. Два індикатори показують прогрес поточного файлу і всього списку. <strong>«Зупинити»</strong> перериває роботу (недороблений файл видаляється).</li>
+<li>У колонці «Сумісність / стан» видно результат, наприклад <code>готово → 5 частин (ID3v2.3)</code>.</li>
+<li><strong>«Відкрити папку результату»</strong> відкриває папку в Провіднику.</li>
+</ul>
+<p><a id="ua-tips"></a></p>
+<h2>11. Поради для автомагнітоли</h2>
+<ul>
+<li>Флешка у <strong>FAT32</strong> (не NTFS і не exFAT), бажано до 32 ГБ; у папці не більше ~999 файлів.</li>
+<li>Короткі імена файлів і папок, без емодзі.</li>
+<li>Якщо не грає: спробуйте бітрейт 192 або 128 кбіт/с, вимкніть обкладинку, розбийте довгий файл на частини по 20–30 хв.</li>
+<li>Щоб підібрати параметри, скористайтеся кнопкою «Взяти параметри з файлу, що грає…».</li>
+</ul>
+<p><a id="ua-faq"></a></p>
+<h2>12. Типові проблеми та рішення</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Проблема</th>
+<th>Рішення</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Синє вікно «Windows захистив ваш комп'ютер»</td>
+<td>«Докладніше» → «Виконати однаково». Програма не має платного цифрового підпису, тому SmartScreen її «не знає».</td>
+</tr>
+<tr>
+<td>Антивірус видаляє або блокує <code>AudioConverter.exe</code></td>
+<td>Це хибне спрацювання, типове для програм, зібраних PyInstaller. Додайте папку програми до винятків антивірусу або Windows Defender (Захист від вірусів і загроз → Керування параметрами → Винятки). Або запускайте з вихідного коду (Варіант Б).</td>
+</tr>
+<tr>
+<td>«FFmpeg: НЕ ЗНАЙДЕНО»</td>
+<td>Перевірте, що поруч з програмою є <code>ffmpeg\bin\ffmpeg.exe</code> і <code>ffprobe.exe</code>. Або натисніть «Вказати FFmpeg…» і виберіть папку з ними.</td>
+</tr>
+<tr>
+<td>Програвач не грає або немає звуку</td>
+<td>Перевірте, що є <code>ffmpeg\bin\ffplay.exe</code>; що вибрано правильний пристрій виведення (значок динаміка у Windows); що гучність у програмі не 0 % і звук не вимкнено (♪). Після підключення навушників або Bluetooth натисніть ■ і ▶ знову.</td>
+</tr>
+<tr>
+<td>Колесо миші не змінює гучність</td>
+<td>Наведіть курсор саме на повзунок (або значення %), потім крутіть колесо.</td>
+</tr>
+<tr>
+<td>Файл «✖ не вдалося прочитати»</td>
+<td>Файл пошкоджений або це не аудіо. Спробуйте відкрити його в іншому програвачі.</td>
+</tr>
+<tr>
+<td>Помилка перекодування</td>
+<td>Текст помилки FFmpeg показується у вікні. Часто допомагає інший формат або бітрейт; перевірте вільне місце на диску й права на запис у папку збереження.</td>
+</tr>
+<tr>
+<td>Магнітола показує «кракозябри»</td>
+<td>Увімкніть «ID3v1 — кирилиця у Windows-1251» і «Лише ID3v2.3».</td>
+</tr>
+<tr>
+<td>Магнітола не бачить файл</td>
+<td>MP3, 44 100 Гц, CBR, ID3v2.3, без обкладинки; флешка у FAT32.</td>
+</tr>
+<tr>
+<td>Вікно не вміщується на екран</td>
+<td>Розгорніть вікно на весь екран; мінімальний розмір 1060×820. На ноутбуках з масштабом 150 % спробуйте 125 % (Параметри Windows → Дисплей).</td>
+</tr>
+</tbody>
+</table></div>
+<p><a id="ua-dev"></a></p>
+<h2>13. Для розробників: структура й збирання EXE</h2>
+<pre><code>├─ audio_converter.pyw     програма (один файл, Python 3.8+, tkinter)
+├─ AudioConverter.ico      значок
+├─ Start.bat               запуск із вихідного коду
+├─ Install-FFmpeg.bat      встановлення FFmpeg через winget
+├─ build_exe.bat           збирання AudioConverter.exe (PyInstaller)
+├─ docs\
+│  ├─ index.html           ця документація як вебсторінка (для GitHub Pages)
+│  ├─ EXE_INSTRUCTIONS.txt інструкція до пакета з EXE (UA/EN)
+│  └─ img\                 скриншоти й значок
+├─ CHANGELOG.md            історія версій
+└─ LICENSE                 ліцензія MIT
+</code></pre>
+<p><strong>Збирання EXE.</strong> Запустіть <code>build_exe.bat</code>: він встановить PyInstaller і створить <code>dist\AudioConverter\AudioConverter.exe</code>. Потім покладіть <code>ffmpeg.exe</code>, <code>ffprobe.exe</code>, <code>ffplay.exe</code> (і DLL, якщо збірка «shared») у <code>dist\AudioConverter\ffmpeg\bin</code>, додайте <code>docs\EXE_INSTRUCTIONS.txt</code> і запакуйте папку в zip для сторінки Releases. Програма шукає FFmpeg у такому порядку: папка, вказана кнопкою «Вказати FFmpeg…»; поруч із програмою та в <code>ffmpeg\bin</code>; <code>PATH</code>; типові місця встановлення winget.</p>
+<p><strong>Документація на GitHub Pages.</strong> Settings → Pages → Source: <em>Deploy from a branch</em>, гілка <code>main</code>, папка <code>/docs</code>. Сторінка <code>docs/index.html</code> сама знайде посилання на останній реліз.</p>
+<p><a id="ua-settings"></a></p>
+<h2>14. Налаштування, оновлення, видалення</h2>
+<ul>
+<li>Налаштування (останні параметри, папки, еквалайзер, гучність) зберігаються у <code>%APPDATA%\AudioConverterCar\settings.json</code>.</li>
+<li><strong>Оновлення</strong>: розпакуйте нову версію замість старої папки (налаштування збережуться).</li>
+<li><strong>Видалення</strong>: видаліть папку програми та, за бажанням, <code>%APPDATA%\AudioConverterCar</code>. Програма нічого не записує в реєстр і системні папки.</li>
+</ul>
+<p><a id="ua-license"></a></p>
+<h2>15. Ліцензія</h2>
+<p>Код програми поширюється за ліцензією <a href="../LICENSE" data-gh="blob/main/LICENSE">MIT</a>. Пакет з EXE на сторінці Releases містить сторонні компоненти: <strong>FFmpeg 8.1</strong> (LGPL 3.0+, збірка <a href="https://github.com/BtbN/FFmpeg-Builds">BtbN</a>, з бібліотеками LAME, SoX Resampler, Vorbis, SDL2), <strong>Python</strong> (PSF License), <strong>Tcl/Tk</strong> (BSD-подібна ліцензія), завантажувач <strong>PyInstaller</strong> (GPL з винятком для поширення). Повні тексти — у файлі <code>THIRD-PARTY-LICENSES.txt</code> всередині пакета.</p>
+<hr />
+</section>
+<section data-en lang="en" hidden>
+<div class="hero"><h1>Car Audio Converter</h1>
+<p>Analyze and re-encode music for car stereos: MP3 44.1 kHz CBR, ID3v2.3 tags, readable Cyrillic titles, cover art, splitting long compilations, a player with an equalizer.</p>
+<div class="dl"><a href="#en-install" data-gh="releases/latest">Download EXE (Windows x64)</a><a class="alt" href="#en-install" data-gh="">Code on GitHub</a></div></div>
+
+<blockquote>
+<p>The program interface is in Ukrainian. Below, each control is given with its Ukrainian label and an English translation, e.g. <strong>«Перекодувати»</strong> (<em>Convert</em>).</p>
+</blockquote>
+<p><a id="en-features"></a></p>
+<h2>1. Features</h2>
+<p>Many car stereos are picky: they refuse 48 kHz files, variable bitrate (VBR), large embedded cover art or ID3v2.4 tags, show garbled Cyrillic text, or can't open very long files. The program detects these problems and re-encodes music so that it reliably plays in the car.</p>
+<ul>
+<li><strong>File analysis</strong>: codec, sample rate, bitrate (CBR/VBR), channels, tag version, cover art, plus a plain-language car-stereo compatibility check.</li>
+<li><strong>Conversion</strong> to MP3, AAC (M4A), WMA, OGG, FLAC, WAV. One-click <strong>Car stereo</strong> profile («★ Профіль «Автомагнітола»»): MP3, 44,100 Hz, CBR 256 kbps, stereo, ID3v2.3.</li>
+<li><strong>Copy settings from a file that plays</strong> («Взяти параметри з файлу, що грає…»): pick a song your stereo definitely plays, and its parameters are copied.</li>
+<li><strong>Tags</strong>: title, artist, album, album artist, year, genre, track number; fill from the file name, number tracks by list order.</li>
+<li><strong>Cover art</strong>: your own image, the file's own cover, or none. Large images are automatically scaled down to 500×500, keeping proportions.</li>
+<li><strong>ID3v2.3 only</strong> (instead of ID3v2.4) and <strong>ID3v1 in Windows-1251</strong>, so older stereos display Cyrillic titles.</li>
+<li><strong>Splitting long files</strong>: automatically (every N minutes, N equal parts), manually, or from a <strong>track list</strong> (“0:00 Artist - Song”).</li>
+<li><strong>Built-in player</strong> with timeline, volume (up to 200%) and a <strong>10-band equalizer</strong>; mark cut points by ear.</li>
+<li>Batch processing of files and whole folders; two progress bars; original files are never modified.</li>
+</ul>
+<p><a id="en-install"></a></p>
+<h2>2. Download and installation</h2>
+<h3>Option A (recommended): EXE package</h3>
+<ol>
+<li>Open <a href="#en-install" data-gh="releases/latest"><strong>Releases</strong></a> and download <code>AudioConverter_2.3_Windows_x64.zip</code>.</li>
+<li>Right-click the archive → <strong>Properties</strong> → if there is an <strong>Unblock</strong> checkbox at the bottom, tick it → <strong>OK</strong>.</li>
+<li>Extract the archive to a normal folder, e.g. <code>C:\Programs\AudioConverter</code>. <strong>Do not run the program from inside the zip.</strong></li>
+<li>Run <code>AudioConverter.exe</code>. Python and FFmpeg are already included; nothing else needs to be installed.</li>
+</ol>
+<blockquote>
+<p>On first launch Windows may show a blue <strong>“Windows protected your PC”</strong> window. Click <strong>More info</strong> → <strong>Run anyway</strong>. The program has no paid code-signing certificate, so SmartScreen does not “know” it. See <a href="#en-faq">Troubleshooting</a> and the <a href="EXE_INSTRUCTIONS.txt">EXE instructions</a>.</p>
+</blockquote>
+<h3>Option B: run from source (Python)</h3>
+<ol>
+<li>Install <strong>Python 3.8 or newer</strong> from <a href="https://www.python.org/downloads/">python.org</a>; tick <strong>“Add python.exe to PATH”</strong>.</li>
+<li>Get the code: <strong>Code → Download ZIP</strong> on this page (or <code>git clone</code>) and extract it.</li>
+<li>Install <strong>FFmpeg</strong>: run <code>Install-FFmpeg.bat</code> (uses winget) or download <code>ffmpeg-release-essentials.zip</code> from <a href="https://www.gyan.dev/ffmpeg/builds/">gyan.dev</a> and put <code>ffmpeg.exe</code>, <code>ffprobe.exe</code>, <code>ffplay.exe</code> into an <code>ffmpeg\bin</code> folder next to the program.</li>
+<li>Run <code>Start.bat</code> (or double-click <code>audio_converter.pyw</code>).</li>
+</ol>
+<p>No third-party Python packages are needed: the interface uses the built-in tkinter.</p>
+<p><a id="en-quick"></a></p>
+<h2>3. Quick start (5 steps)</h2>
+<ol>
+<li><strong>«Додати файли…»</strong> (<em>Add files…</em>) or <strong>«Додати папку…»</strong> (<em>Add folder…</em>). You can also drag files onto <code>AudioConverter.exe</code>.</li>
+<li>Check the <strong>«Сумісність / стан»</strong> (<em>Compatibility / status</em>) column: ✔ compatible, ⚠ possible problems, ✖ most likely won't play.</li>
+<li>Click <strong>«★ Профіль «Автомагнітола»»</strong> (<em>Car stereo profile</em>) on the right.</li>
+<li>If needed, adjust tags, cover art or splitting in the tabs on the left.</li>
+<li>Click <strong>«▶ Перекодувати»</strong> (<em>Convert</em>). The new files appear next to the originals (with a <code>_car</code> suffix) or in the chosen folder.</li>
+</ol>
+<p><a id="en-window"></a></p>
+<h2>4. Main window</h2>
+<figure><a class="zoom" href="img/01_main.png"><img src="img/01_main.png" alt="Main window" loading="lazy"></a><figcaption>Main window</figcaption></figure>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>«Вхідні файли»</strong> (<em>Input files</em>, top)</td>
+<td>File list with codec, sample rate, bitrate, duration and compatibility verdict; add files/folder, remove, clear.</td>
+</tr>
+<tr>
+<td><strong>«Програвач»</strong> (<em>Player</em>)</td>
+<td>Playback, timeline, volume, equalizer, cut-point markers.</td>
+</tr>
+<tr>
+<td><strong>«Вибраний файл»</strong> (<em>Selected file</em>, left)</td>
+<td>Three tabs: «Параметри» (<em>Details</em>), «Теги й обкладинка» (<em>Tags &amp; cover</em>), «Розбиття на ділянки» (<em>Splitting</em>).</td>
+</tr>
+<tr>
+<td><strong>«Параметри вихідного файлу»</strong> (<em>Output settings</em>, right)</td>
+<td>Format, bitrate, sample rate, channels, tags, splitting, cover options, profiles.</td>
+</tr>
+<tr>
+<td><strong>Bottom</strong></td>
+<td>Output folder, per-file and overall progress, «Перекодувати» (<em>Convert</em>), «Відкрити папку результату» (<em>Open output folder</em>), «Зупинити» (<em>Stop</em>), FFmpeg path.</td>
+</tr>
+</tbody>
+</table></div>
+<p><a id="en-player"></a></p>
+<h2>5. Player</h2>
+<figure><a class="zoom" href="img/05_player.png"><img src="img/05_player.png" alt="Player and splitting" loading="lazy"></a><figcaption>Player and splitting</figcaption></figure>
+<ul>
+<li><strong>Double-click</strong> a file in the list (or select it and press <strong>Enter</strong> / <strong>▶</strong>) to play it.</li>
+<li>Buttons: <strong>|◀</strong> previous file (or restart current), <strong>▶ / ||</strong> play / pause, <strong>■</strong> stop, <strong>▶|</strong> next.</li>
+<li><strong>Timeline</strong>: click or drag the knob to seek; the <strong>mouse wheel</strong> over the timeline seeks ±5 s. Orange marks are segment boundaries from the Splitting tab.</li>
+<li><strong>Volume</strong>: slider 0–200% (mouse wheel: ±5%); the <strong>♪</strong> button mutes/unmutes.</li>
+<li><strong>«Еквалайзер…»</strong> (<em>Equalizer…</em>) opens a 10-band equalizer:</li>
+</ul>
+<figure><a class="zoom" href="img/06_eq.png"><img src="img/06_eq.png" alt="Equalizer" loading="lazy"></a><figcaption>Equalizer</figcaption></figure>
+<ul>
+<li>bands 31 Hz … 16 kHz, −12 … +12 dB; <strong>mouse wheel</strong> over a slider: ±1 dB; <strong>double-click</strong>: reset to 0;</li>
+<li>presets: Flat, More bass, Less bass, Rock, Pop, Dance, Jazz, Classical, Voice / audiobook, More treble; manual changes are shown as «Власне» (<em>Custom</em>);</li>
+<li>checkbox <strong>«Застосовувати еквалайзер і під час перекодування»</strong> (<em>Also apply the equalizer when converting</em>): new files will sound the same (a ⚠ reminder appears on the right).</li>
+<li><strong>«Поточну позицію → Початок / Кінець ділянки»</strong> (<em>Current position → Segment start / end</em>) copies the playing time into the Splitting tab, so you can cut a compilation by ear.</li>
+<li><strong>«Далі по списку»</strong> (<em>Continue with next</em>) plays the next file automatically. <strong>«Відкрити інший файл…»</strong> (<em>Open another file…</em>) plays any file, e.g. a converted result.</li>
+</ul>
+<blockquote>
+<p>Sound is played by <code>ffplay.exe</code> from the FFmpeg package. After seeking or changing volume/EQ the sound pauses briefly. This is normal.</p>
+</blockquote>
+<p><a id="en-params"></a></p>
+<h2>6. “Параметри” (<em>Details</em>) tab: compatibility check</h2>
+<p>Shows all technical properties of the selected file and a list of remarks:</p>
+<ul>
+<li>✖ <strong>red</strong>: the stereo will most likely not play the file (wrong codec, sample rate other than 44,100 Hz, more than 2 channels…);</li>
+<li>⚠ <strong>amber</strong>: possible problems (VBR, very long or large file, AAC);</li>
+<li>ℹ <strong>grey</strong>: information (ID3v2.4, cover art, missing tags, planned splitting).</li>
+</ul>
+<p><a id="en-tags"></a></p>
+<h2>7. “Теги й обкладинка” (<em>Tags &amp; cover</em>) tab</h2>
+<figure><a class="zoom" href="img/02_tags.png"><img src="img/02_tags.png" alt="Tags and cover art" loading="lazy"></a><figcaption>Tags and cover art</figcaption></figure>
+<ul>
+<li>Fields <strong>Title, Artist, Album, Album artist, Year, Genre, Track</strong> (e.g. <code>3</code> or <code>3/12</code>). An empty field means the tag is not written.</li>
+<li><strong>«Заповнити з імені файлу»</strong> (<em>Fill from file name</em>): <code>Artist - Title.mp3</code> → tags (a leading number like <code>01 -</code> is skipped).</li>
+<li><strong>«Повернути теги файлу»</strong> (<em>Restore file tags</em>): undo your edits.</li>
+<li><strong>«Альбом/рік/жанр/обкладинку → усім»</strong> (<em>Album/year/genre/cover → all</em>): copy these fields to every file in the list.</li>
+<li><strong>«Пронумерувати за списком»</strong> (<em>Number by list</em>): track 1/N, 2/N… in list order.</li>
+<li><strong>Cover art</strong>: <em>As in global settings</em>, <em>Keep the file's cover</em>, <em>Own image</em> (JPG, PNG, BMP, WebP), <em>No cover</em>. <strong>«Знайти в папці»</strong> (<em>Find in folder</em>) looks for <code>cover.jpg</code>, <code>folder.jpg</code>, <code>front.jpg</code> next to the song.</li>
+<li>An own image is <strong>always</strong> saved as JPEG and, if larger than 500×500, scaled down proportionally (1200×900 → 500×375, 800×1600 → 250×500). The resulting size is shown under the thumbnail.</li>
+<li>Only MP3, M4A and FLAC store cover art.</li>
+</ul>
+<p>Original files are not modified: tags and cover art go only into the new files.</p>
+<p><a id="en-split"></a></p>
+<h2>8. “Розбиття на ділянки” (<em>Splitting</em>) tab</h2>
+<figure><a class="zoom" href="img/04_split.png"><img src="img/04_split.png" alt="Splitting" loading="lazy"></a><figcaption>Splitting</figcaption></figure>
+<p>Modes for the selected file:</p>
+<ul>
+<li><strong>As in global settings</strong>: the “Split into parts every, min” field on the right (0 means no splitting);</li>
+<li><strong>Do not split this file</strong>;</li>
+<li><strong>Manual</strong>: use the segment list.</li>
+</ul>
+<p>Defining segments:</p>
+<ul>
+<li><strong>Manually</strong>: <em>Start</em>, <em>End</em> and an optional <em>Name</em> → <strong>«Додати»</strong> (<em>Add</em>). Time format: <code>1:02:03</code>, <code>45:10</code> or <code>90</code> (seconds). An empty <em>End</em> means up to the next segment or the end of the file. <strong>Gaps between segments are not included</strong>, so you can cut out unwanted parts.</li>
+<li><strong>Automatically</strong>: <em>Fill every N min</em> or <em>into N equal parts</em>, then adjust if needed.</li>
+<li><strong>From a track list</strong>: <strong>«Вставити трекліст…»</strong> (<em>Paste track list…</em>) and paste a list with times (e.g. from a video description):</li>
+</ul>
+<figure><a class="zoom" href="img/03_tracklist.png"><img src="img/03_tracklist.png" alt="Track list" loading="lazy"></a><figcaption>Track list</figcaption></figure>
+<p>Lines like <code>0:00 Title</code>, <code>1. Artist - Song 3:45</code>, <code>[1:02:30] Title</code> are recognized. The checkbox <strong>“Names like ‘Artist - Song’ → separate tags”</strong> splits them into Artist and Title tags.
+- <strong>Listen</strong>: <em>▶ from Start</em> and <em>▶ before End</em> to find the exact cut point.</p>
+<p>Parts get tags: title (segment name or “… (part N of M)”), track N/M, album (the source file name if empty). The checkbox <strong>«Частини файлу — в окрему папку»</strong> (<em>Put parts into a separate folder</em>) creates a folder named after the file with <code>01 - Name.mp3</code>, <code>02 - …</code>.</p>
+<p><a id="en-output"></a></p>
+<h2>9. Output settings</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Values</th>
+<th>Recommendation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Формат (<em>Format</em>)</td>
+<td>MP3, AAC (M4A), WMA, OGG Vorbis, FLAC, WAV</td>
+<td><strong>MP3</strong>, the most compatible</td>
+</tr>
+<tr>
+<td>Тип бітрейту (<em>Bitrate mode</em>)</td>
+<td>CBR / VBR</td>
+<td><strong>CBR</strong> for car stereos</td>
+</tr>
+<tr>
+<td>Бітрейт (<em>Bitrate</em>)</td>
+<td>32–320 kbps</td>
+<td>192–256 kbps</td>
+</tr>
+<tr>
+<td>Якість VBR (<em>VBR quality</em>)</td>
+<td>V0 (~245) … V9 (~65)</td>
+<td>VBR only</td>
+</tr>
+<tr>
+<td>Частота (<em>Sample rate</em>)</td>
+<td>44,100, 48,000, 32,000… Hz</td>
+<td><strong>44,100 Hz</strong></td>
+</tr>
+<tr>
+<td>Канали (<em>Channels</em>)</td>
+<td>Source / Stereo / Mono</td>
+<td>Stereo</td>
+</tr>
+<tr>
+<td>Розрядність (<em>Bit depth</em>)</td>
+<td>16 / 24 bit</td>
+<td>FLAC and WAV</td>
+</tr>
+<tr>
+<td>Теги MP3 (<em>MP3 tags</em>)</td>
+<td>ID3v2.3 + ID3v1 / ID3v2.3 / ID3v2.4</td>
+<td>ID3v2.3 + ID3v1</td>
+</tr>
+<tr>
+<td>Лише ID3v2.3 (<em>ID3v2.3 only</em>)</td>
+<td>checkbox</td>
+<td>on</td>
+</tr>
+<tr>
+<td>ID3v1 у Windows-1251</td>
+<td>checkbox</td>
+<td>on (Cyrillic on older stereos)</td>
+</tr>
+<tr>
+<td>Розбити на частини по, хв (<em>Split every, min</em>)</td>
+<td>0–120</td>
+<td>20–30 min for long compilations</td>
+</tr>
+<tr>
+<td>Зберегти теги (<em>Keep tags</em>)</td>
+<td>checkbox</td>
+<td>copy tags from the original</td>
+</tr>
+<tr>
+<td>Зберегти обкладинку (<em>Keep cover art</em>)</td>
+<td>checkbox</td>
+<td>off in the Car stereo profile</td>
+</tr>
+<tr>
+<td>Обкладинку з файлу — JPEG до 500×500</td>
+<td>checkbox</td>
+<td>on (scales down the file's own cover)</td>
+</tr>
+<tr>
+<td>Частини — в окрему папку (<em>Parts into a folder</em>)</td>
+<td>checkbox</td>
+<td>for compilations</td>
+</tr>
+<tr>
+<td>Вирівняти гучність (<em>Normalize loudness</em>)</td>
+<td>EBU R128, −14 LUFS</td>
+<td>for mixed-loudness compilations</td>
+</tr>
+</tbody>
+</table></div>
+<p>Buttons: <strong>Car stereo profile</strong> and <strong>Copy settings from a file that plays…</strong>. The estimated output size is shown below them.</p>
+<p><a id="en-convert"></a></p>
+<h2>10. Converting and results</h2>
+<figure><a class="zoom" href="img/08_done.png"><img src="img/08_done.png" alt="After conversion" loading="lazy"></a><figcaption>After conversion</figcaption></figure>
+<ul>
+<li><strong>«Зберегти в папку»</strong> (<em>Save to folder</em>): if empty, files are saved next to the originals with a <code>_car</code> suffix.</li>
+<li><strong>«▶ Перекодувати»</strong> (<em>Convert</em>) processes <strong>all</strong> files in the list. Two progress bars show the current file and the whole list. <strong>«Зупинити»</strong> (<em>Stop</em>) aborts (the unfinished file is deleted).</li>
+<li>The <em>Compatibility / status</em> column shows the result, e.g. <code>готово → 5 частин (ID3v2.3)</code> (<em>done → 5 parts</em>).</li>
+<li><strong>«Відкрити папку результату»</strong> (<em>Open output folder</em>) opens it in Explorer.</li>
+</ul>
+<p><a id="en-tips"></a></p>
+<h2>11. Car stereo tips</h2>
+<ul>
+<li>USB stick formatted as <strong>FAT32</strong> (not NTFS or exFAT), preferably ≤ 32 GB; no more than ~999 files per folder.</li>
+<li>Short file and folder names, no emoji.</li>
+<li>If a file still doesn't play: try 192 or 128 kbps, disable cover art, split long files into 20–30 minute parts.</li>
+<li>Use <strong>Copy settings from a file that plays…</strong> to match a known-good file.</li>
+</ul>
+<p><a id="en-faq"></a></p>
+<h2>12. Troubleshooting</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Blue “Windows protected your PC” window</td>
+<td>Click <strong>More info</strong> → <strong>Run anyway</strong>. The program has no paid code-signing certificate, so SmartScreen does not “know” it.</td>
+</tr>
+<tr>
+<td>Antivirus deletes or blocks <code>AudioConverter.exe</code></td>
+<td>A false positive common for PyInstaller-built programs. Add the program folder to your antivirus / Windows Defender exclusions (Virus &amp; threat protection → Manage settings → Exclusions), or run from source (Option B).</td>
+</tr>
+<tr>
+<td>«FFmpeg: НЕ ЗНАЙДЕНО» (<em>FFmpeg: NOT FOUND</em>)</td>
+<td>Make sure <code>ffmpeg\bin\ffmpeg.exe</code> and <code>ffprobe.exe</code> are next to the program, or click «Вказати FFmpeg…» (<em>Locate FFmpeg…</em>) and choose their folder.</td>
+</tr>
+<tr>
+<td>Player is silent</td>
+<td>Check that <code>ffmpeg\bin\ffplay.exe</code> exists, the correct Windows output device is selected, the volume is not 0% and the sound is not muted (♪). After plugging in headphones/Bluetooth press ■ and ▶ again.</td>
+</tr>
+<tr>
+<td>Mouse wheel does not change volume</td>
+<td>Hover over the slider itself (or the % value), then scroll.</td>
+</tr>
+<tr>
+<td>“✖ не вдалося прочитати” (<em>could not read</em>)</td>
+<td>The file is damaged or not audio; try another player.</td>
+</tr>
+<tr>
+<td>Conversion error</td>
+<td>The FFmpeg error text is shown. Try another format/bitrate; check free disk space and write permission for the output folder.</td>
+</tr>
+<tr>
+<td>Garbled text on the stereo</td>
+<td>Enable “ID3v1 in Windows-1251” and “ID3v2.3 only”.</td>
+</tr>
+<tr>
+<td>Stereo does not see the file</td>
+<td>MP3, 44,100 Hz, CBR, ID3v2.3, no cover art; FAT32 USB stick.</td>
+</tr>
+<tr>
+<td>Window doesn't fit the screen</td>
+<td>Maximize the window (minimum size 1060×820); on laptops at 150% scaling try 125% (Windows Settings → Display).</td>
+</tr>
+</tbody>
+</table></div>
+<p><a id="en-dev"></a></p>
+<h2>13. For developers: layout and building the EXE</h2>
+<pre><code>├─ audio_converter.pyw     the program (single file, Python 3.8+, tkinter)
+├─ AudioConverter.ico      icon
+├─ Start.bat               run from source
+├─ Install-FFmpeg.bat      install FFmpeg via winget
+├─ build_exe.bat           build AudioConverter.exe (PyInstaller)
+├─ docs\
+│  ├─ index.html           this documentation as a web page (for GitHub Pages)
+│  ├─ EXE_INSTRUCTIONS.txt instructions for the EXE package (UA/EN)
+│  └─ img\                 screenshots and icon
+├─ CHANGELOG.md            version history
+└─ LICENSE                 MIT license
+</code></pre>
+<p><strong>Building the EXE.</strong> Run <code>build_exe.bat</code>: it installs PyInstaller and creates <code>dist\AudioConverter\AudioConverter.exe</code>. Then put <code>ffmpeg.exe</code>, <code>ffprobe.exe</code>, <code>ffplay.exe</code> (plus DLLs for a “shared” build) into <code>dist\AudioConverter\ffmpeg\bin</code>, add <code>docs\EXE_INSTRUCTIONS.txt</code>, and zip the folder for the Releases page. FFmpeg is searched in this order: the folder chosen with «Вказати FFmpeg…»; next to the program and in <code>ffmpeg\bin</code>; <code>PATH</code>; typical winget install locations.</p>
+<p><strong>Documentation on GitHub Pages.</strong> Settings → Pages → Source: <em>Deploy from a branch</em>, branch <code>main</code>, folder <code>/docs</code>. The page <code>docs/index.html</code> finds the latest release link by itself.</p>
+<p><a id="en-settings"></a></p>
+<h2>14. Settings, updating, uninstalling</h2>
+<ul>
+<li>Settings (last parameters, folders, equalizer, volume) are stored in <code>%APPDATA%\AudioConverterCar\settings.json</code>.</li>
+<li><strong>Update</strong>: extract the new version over the old folder; settings are kept.</li>
+<li><strong>Uninstall</strong>: delete the program folder and, optionally, <code>%APPDATA%\AudioConverterCar</code>. Nothing is written to the registry or system folders.</li>
+</ul>
+<p><a id="en-license"></a></p>
+<h2>15. License</h2>
+<p>The program code is released under the <a href="../LICENSE" data-gh="blob/main/LICENSE">MIT License</a>. The EXE package on the Releases page includes third-party components: <strong>FFmpeg 8.1</strong> (LGPL 3.0+, <a href="https://github.com/BtbN/FFmpeg-Builds">BtbN</a> build, with LAME, SoX Resampler, Vorbis, SDL2), <strong>Python</strong> (PSF License), <strong>Tcl/Tk</strong> (BSD-style license), and the <strong>PyInstaller</strong> bootloader (GPL with a distribution exception). Full texts are in <code>THIRD-PARTY-LICENSES.txt</code> inside the package.</p>
+</section>
+<footer><span data-ua>Аудіоконвертер для автомагнітоли 2.3 · ліцензія MIT. Пакет з EXE містить FFmpeg (LGPL 3.0+), Python (PSF), Tcl/Tk (BSD), PyInstaller.</span><span data-en hidden>Car Audio Converter 2.3 · MIT License. The EXE package includes FFmpeg (LGPL 3.0+), Python (PSF), Tcl/Tk (BSD), PyInstaller.</span></footer>
+</main>
+</div>
+<div class="lb" id="lb"><img alt=""></div>
+<script>
+(function(){
+  // На GitHub Pages (owner.github.io/repo/) посилання ведуть на релізи й файли репозиторію
+  var h = location.hostname, m = /^([^.]+)\.github\.io$/i.exec(h), repo = location.pathname.split("/")[1];
+  if (m && repo) {
+    var base = "https://github.com/" + m[1] + "/" + repo;
+    document.querySelectorAll("[data-gh]").forEach(function(a){
+      var p = a.getAttribute("data-gh"); a.href = p ? base + "/" + p : base;
+    });
+  } else {
+    document.querySelectorAll('[data-gh=""]').forEach(function(a){ a.hidden = true; });
+  }
+  var KEY="acar-lang";
+  function setLang(l, scroll){
+    document.querySelectorAll("[data-ua]").forEach(function(e){e.hidden = l!=="ua";});
+    document.querySelectorAll("[data-en]").forEach(function(e){e.hidden = l!=="en";});
+    document.querySelectorAll(".lang button").forEach(function(b){b.setAttribute("aria-pressed", b.dataset.set===l);});
+    document.documentElement.lang = l==="ua" ? "uk" : "en";
+    try{localStorage.setItem(KEY,l);}catch(e){}
+    if(scroll) window.scrollTo({top:0});
+  }
+  var start="ua";
+  try{ start = localStorage.getItem(KEY) || start; }catch(e){}
+  if(/^#(en|english)/.test(location.hash)) start="en";
+  if(/^#(ua|ukrainian)/.test(location.hash)) start="ua";
+  setLang(start,false);
+  document.querySelectorAll(".lang button").forEach(function(b){b.onclick=function(){setLang(b.dataset.set,true);};});
+  document.addEventListener("click",function(ev){
+    var a=ev.target.closest("a"); if(!a) return;
+    var href=a.getAttribute("href")||"";
+    if(href==="#english"){ev.preventDefault(); setLang("en",true);}
+    else if(href==="#ukrainian"){ev.preventDefault(); setLang("ua",true);}
+    else if(a.classList.contains("zoom")){ev.preventDefault(); var lb=document.getElementById("lb"); lb.querySelector("img").src=a.href; lb.classList.add("on");}
+  });
+  document.getElementById("lb").onclick=function(){this.classList.remove("on");};
+  document.addEventListener("keydown",function(e){if(e.key==="Escape")document.getElementById("lb").classList.remove("on");});
+  var links=[].slice.call(document.querySelectorAll("nav.toc a"));
+  var obs="IntersectionObserver" in window && new IntersectionObserver(function(es){
+    es.forEach(function(en){ if(en.isIntersecting){ var id=en.target.id;
+      links.forEach(function(l){l.classList.toggle("on", l.getAttribute("href")==="#"+id);}); }});
+  },{rootMargin:"-80px 0px -70% 0px"});
+  if(obs) document.querySelectorAll("main a[id]").forEach(function(a){obs.observe(a);});
+})();
+</script>
+</body>
+</html>
